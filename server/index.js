@@ -19,28 +19,19 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // CORS setup
-const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:3000'];
 app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true); // allow non-browser requests like Postman
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL : '*',
   credentials: true
 }));
 
-// Import routes (use ES modules style if using "type": "module")
+// Routes
 import summaryRoutes from './routes/summary.js';
 import emailRoutes from './routes/email.js';
 
-// Use routes
 app.use('/api/summary', summaryRoutes);
 app.use('/api/email', emailRoutes);
 
-// Health check endpoint
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
@@ -48,18 +39,17 @@ app.get('/api/health', (req, res) => {
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 }
 
-// Global error handling middleware
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
+  console.error('Error:', err); // log full error
   res.status(500).json({
     error: 'Internal Server Error',
-    message: err.message
+    message: err.message || 'Something went wrong!'
   });
 });
 
