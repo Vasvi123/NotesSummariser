@@ -146,12 +146,7 @@ try {
               </button>
             ) : (
               <>
-                <button onClick={handleSave} className="btn btn-success">
-                  <Save size={16} /> Save
-                </button>
-                <button onClick={handleCancel} className="btn btn-secondary">
-                  Cancel
-                </button>
+                
               </>
             )}
             <button onClick={handleCopySummary} className="btn btn-secondary">

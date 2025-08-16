@@ -171,12 +171,15 @@ body {
 }
 
 /* Summary display styles */
+/* Summary display styles */
 .summary-container {
   background: white;
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
+  max-width: 800px;
+  width: 500%;
 }
 
 .summary-header {
@@ -195,15 +198,28 @@ body {
   border-left: 4px solid #667eea;
   white-space: pre-wrap;
   line-height: 1.7;
+  text-align: left;
 }
 
+/* Make editable summary content maintain same size */
 .summary-content.editable {
-  background: white;
-  border: 2px solid #e5e7eb;
-  outline: none;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  background: white !important;
+  border: 2px solid #e5e7eb !important;
+  border-left: 4px solid #667eea !important;
+  outline: none !important;
+  resize: vertical !important;
+  /* Force exact same dimensions */
+  padding: 1.5rem !important;
+  border-radius: 8px !important;
+  white-space: pre-wrap !important;
+  line-height: 1.7 !important;
+  min-height: 150px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  /* Ensure no default textarea/input styling */
+  margin: 0 !important;
+  vertical-align: top !important;
 }
 
 .summary-content.editable:focus {
@@ -453,4 +469,3 @@ body {
 .rows-20 {
   min-height: 20rem;
 }
-
