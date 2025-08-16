@@ -64,17 +64,20 @@ const SummaryPage = () => {
     if (!emailData.subject.trim()) return toast.error("Enter email subject");
 
     setIsSendingEmail(true);
-    try {
-      const response = await fetch("/api/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          recipients: validRecipients,
-          subject: emailData.subject,
-          summary: editedSummary,
-          senderName: emailData.senderName,
-        }),
-      });
+    const BACKEND_URL = "https://notessummariser.onrender.com"; // your deployed backend
+
+try {
+  const response = await fetch(`${BACKEND_URL}/api/email/send`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      recipients: validRecipients,
+      subject: emailData.subject,
+      summary: editedSummary,
+      senderName: emailData.senderName,
+    }),
+  });
+
 
       if (!response.ok) {
         const text = await response.text();
