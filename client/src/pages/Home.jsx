@@ -24,8 +24,9 @@ const Home = () => {
 
     setIsLoading(true);
     
+    
     try {
-      const response = await fetch('/api/summary/generate', {
+      const response = await fetch('https://notessummariser.onrender.com/api/summary/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
